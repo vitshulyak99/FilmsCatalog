@@ -2,6 +2,7 @@
 using System;
 using System.Threading.Tasks;
 using FilmsCatalog.Models;
+using FilmsCatalog.Models.Db;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 

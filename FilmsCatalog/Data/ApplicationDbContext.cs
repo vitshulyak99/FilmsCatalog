@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using FilmsCatalog.Models;
+using FilmsCatalog.Models.Db;
 
 namespace FilmsCatalog.Data
 {
@@ -12,6 +9,19 @@ namespace FilmsCatalog.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+
+        }
+
+        public DbSet<Film> Films { get; set; }
+        public DbSet<Director> Directors { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.Entity<Film>(e =>
+            {
+                e.HasOne(x => x.Director).WithMany(x => x.Films);
+            });
         }
     }
 }
