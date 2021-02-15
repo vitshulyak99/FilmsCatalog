@@ -52,7 +52,7 @@ namespace FilmsCatalog.Controllers
                 await _signInManager.SignInAsync(user, false);
                 _logger.LogInformation("User success signup!");
                 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Film");
             }
 
             foreach (var error in created.Errors)
