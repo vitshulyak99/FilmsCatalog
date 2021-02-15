@@ -16,7 +16,7 @@ namespace FilmsCatalog.Controllers
         [HttpGet("[controller]/[action]/{text}")]
         public PartialViewResult Suggestions(string text)
         {
-            var directors = _directorService.GetMatch(text).Select(x => x.Name);
+            var directors = _directorService.GetMatch(text).Select(x => x.Name).ToList();
             return PartialView("_DirectorSuggestions", directors);
         }
     }
