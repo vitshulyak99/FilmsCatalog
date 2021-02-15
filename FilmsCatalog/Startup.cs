@@ -7,6 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using FilmsCatalog.Models.Db;
+using FilmsCatalog.Services;
+using FilmsCatalog.Services.Interfaces;
 
 namespace FilmsCatalog
 {
@@ -30,6 +32,8 @@ namespace FilmsCatalog
             services.AddDatabaseDeveloperPageExceptionFilter();            
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddScoped<IFilmService, FilmService>();
+            services.AddScoped<IDirectorService, DirectorService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
