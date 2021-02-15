@@ -1,5 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using FilmsCatalog.Attributes;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FilmsCatalog.Models
 {
@@ -18,6 +21,8 @@ namespace FilmsCatalog.Models
         public int Year { get; set; }
 
         [Display(Name = "Постер")]
+        [FileExtensionsAttribute_(Extensions = ".jpeg,.jpg,.png,.gif", ErrorMessage = "Неверный тип файла" )]
+        [MaxFileSize(ErrorMessage = "Неверный размер файла",MaxFileSize = 2048)]
         public IFormFile Poster { get; set; }
 
         [Display(Name = "Режисер")]

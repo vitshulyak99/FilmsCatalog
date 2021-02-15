@@ -3,8 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using FilmsCatalog.Models.Db;
 
 namespace FilmsCatalog.Data
-{
-    public class ApplicationDbContext : IdentityDbContext<User>
+{   // Todo move data access context and entities to external project
+    public class ApplicationDbContext : IdentityDbContext<User> 
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

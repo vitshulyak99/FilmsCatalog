@@ -5,7 +5,7 @@ using FilmsCatalog.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace FilmsCatalog.Services
-{
+{   // Todo move services to external project
     public abstract class BaseCrudService<T> : ICrudService<T> where T : BaseEntity
     {
         protected BaseCrudService(DbContext context)

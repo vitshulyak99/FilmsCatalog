@@ -50,6 +50,11 @@ namespace FilmsCatalog.Controllers
         [Authorize]
         public IActionResult Create(FilmCreateViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
             var userId = User.UserId();
 
             var film = new Film
@@ -96,6 +101,11 @@ namespace FilmsCatalog.Controllers
         [Authorize]
         public IActionResult Edit(FilmEditViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
             var userId = User.UserId();
             if (!_filmService.CheckOwner(model.Id, userId)) return Forbid("Отказано в доступе");
 

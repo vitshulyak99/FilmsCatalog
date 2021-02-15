@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using FilmsCatalog.Models.Db;
+﻿using FilmsCatalog.Models.Db;
 
 namespace FilmsCatalog.Models
 {
