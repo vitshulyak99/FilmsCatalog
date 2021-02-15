@@ -1,0 +1,35 @@
+﻿@model ReflectionIT.Mvc.Paging.PagingList<FilmsCatalog.Models.Db.Film>
+@addTagHelper *, ReflectionIT.Mvc.Paging
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+
+}
+
+<div class="row">
+    @if (User?.Identity?.IsAuthenticated ?? false)
+    {
+        <a asp-action="Create" asp-controller="Film" class="btn btn-link"> Добавить </a>
+    }
+</div>
+<nav aria-label="Products navigation example">
+    <vc:pager paging-list="@Model" />
+</nav>
+@if (Model.Count is not 0)
+{
+    <div class="d-flex flex-wrap pb-3">
+        @foreach (var film in Model)
+        {
+            <partial name="_FilmSimpleCard" model="film" />
+        }
+    </div>
+}
+else
+{
+    <h3>
+        Нет фильмов
+    </h3>
+}
+<nav aria-label="Products navigation example">
+    <vc:pager paging-list="@Model" />
+</nav>

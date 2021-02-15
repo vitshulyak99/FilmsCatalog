@@ -1,0 +1,11 @@
+﻿@using FilmsCatalog.Helpers
+@model FilmsCatalog.Models.Db.Film
+@inject FileHelper FileHelper
+<div class="card container-fluid m-1">
+    <img class="card-img-top mt-3" src="@FileHelper.MakeUrlToFile(Model.Poster)" alt="image">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Name</h5>
+        <p class="card-text">@Model.Description</p>
+        <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-primary">Больше информации</a>
+    </div>
+</div>

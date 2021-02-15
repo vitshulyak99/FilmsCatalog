@@ -1,0 +1,24 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "jquery.devbridge-autocomplete@1.4.11",
+      "destination": "wwwroot/lib/jquery.devbridge-autocomplete/",
+      "files": [
+        "jquery.autocomplete.min.js"
+      ]
+    },
+    {
+      "library": "jqueryui@1.12.1",
+      "destination": "wwwroot/lib/jqueryui/",
+      "files": [
+        "jquery-ui.min.js",
+        "jquery-ui.structure.min.css",
+        "jquery-ui.theme.min.css",
+        "themes/base/jquery-ui.min.css",
+        "themes/base/theme.min.css"
+      ]
+    }
+  ]
+}

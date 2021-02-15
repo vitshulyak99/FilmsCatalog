@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using FilmsCatalog.Models.Db;
 using FilmsCatalog.Services;
 using FilmsCatalog.Services.Interfaces;
+using ReflectionIT.Mvc.Paging;
 
 namespace FilmsCatalog
 {
@@ -36,6 +37,11 @@ namespace FilmsCatalog
             services.AddScoped<IFilmService, FilmService>();
             services.AddScoped<IDirectorService, DirectorService>();
             services.AddSingleton<FileHelper>();
+            services.AddPaging(opt =>
+            {
+                opt.ViewName = "Bootstrap4";
+                opt.PageParameterName = "page";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,7 +72,7 @@ namespace FilmsCatalog
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Film}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
         }

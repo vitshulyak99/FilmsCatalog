@@ -92,14 +92,14 @@ namespace FilmsCatalog.Controllers
                 return Redirect(model.ReturnUrl);
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Film");
         }
 
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Film");
         }
     }
 }

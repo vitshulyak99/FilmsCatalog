@@ -1,0 +1,104 @@
+﻿@model FilmCreateViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>Добавление фильма</h2>
+<form asp-controller="Film" asp-action="Create" method="post" style="margin-top: 2em;" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-4 col-sm-6 col-12">
+            <div class="form-row">
+                <div class="form-group col">
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" class="form-control">
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col">
+                    <label asp-for="Description"></label>
+                    <textarea asp-for="Description" style="height: 400px" class="form-control"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col">
+                    <label asp-for="Year"></label>
+                    <input asp-for="Year" type="text" class="form-control" />
+                    <span asp-validation-for="Year" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col">
+                    <label asp-for="Poster"></label>
+                    <input asp-for="Poster" type="file" class="form-control-file">
+                    <span asp-validation-for="Poster" class="text-danger"></span>
+
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col">
+                    <label asp-for="Director"></label>
+                    <input asp-for="Director" list="suggestions" class="form-control">
+                    <span asp-validation-for="Director" autocomplete="new" class="text-danger"></span>
+                    <datalist id="suggestions">
+                    </datalist>
+                </div>
+            </div>
+        </div>
+        <div class="col d-flex justify-content-center">
+            <img id="preview" alt="preview" style="width: 100%; height: 66%" class="img-fluid d-none" />
+        </div>
+    </div>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <button type="submit" class="btn btn-outline-primary">Создать</button>
+    <a asp-action="Index" class="btn btn-outline-secondary">Отмена</a>
+</form>
+
+<script>
+    var xhr = { abort: () => { } };
+
+    const fileAsDataUrl = (file) => {
+        const fr = new FileReader();
+        return new Promise(resolve => {
+            fr.onload = e => resolve(fr.result);
+            fr.readAsDataURL(file);
+        });
+    }
+
+    $(document).ready(function () {
+        $('input[name=Director]')[0].oninput = e => {
+            xhr.abort();
+            xhr = $.get(origin + '/director/suggestions/' + e.target.value).done(data => $('#suggestions').html(data));
+        }
+
+        $('input[type=file]')[0].onchange = e => {
+            fileAsDataUrl(e.target.files[0]).then(imgUrl => {
+                const img = $('img#preview');
+                img[0].src = imgUrl;
+                img.removeClass('d-none');
+            });
+        }
+
+        $('input[name=Year]').datepicker({
+            changeMonth: false,
+            changeYear: true,
+            showButtonPanel: true,
+            yearRange: `1950:${new Date().getUTCFullYear()}`, // Optional Year Range
+            dateFormat: 'yy',
+            onClose: function (dateText, inst) {
+                var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+                $(this).datepicker('setDate', new Date(year, 0, 1));
+            }
+        });
+    });
+</script>
+
+
+<style>
+    .ui-datepicker-calendar {
+        display: none;
+    }
+</style>
