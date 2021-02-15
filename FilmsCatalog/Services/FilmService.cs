@@ -26,18 +26,29 @@ namespace FilmsCatalog.Services
             }
 
             if (entity?.Director is null) return base.Create(entity);
-            
-            var directorSet = Context.Set<Director>();
-            var director = directorSet.FirstOrDefault(x => x.Name.ToLower().Equals(entity.Director.Name));
-            
-            if (director is not null)
-            {
-                entity.Director = director;
-            }
+
+            CheckDirector(entity);
 
             return base.Create(entity);
         }
 
+        public override Film Update(Film entity)
+        {
+            CheckDirector(entity);
+            return base.Update(entity);
+        }
+
         public bool CheckOwner(int id,string userId) => Set.Any(x => x.Id.Equals(id) && x.AddedAt.Id.Equals(userId));
+
+        private void CheckDirector(Film entity)
+        {
+            var directorSet = Context.Set<Director>();
+            var director = directorSet.FirstOrDefault(x => x.Name.ToLower().Equals(entity.Director.Name));
+
+            if (director is not null)
+            {
+                entity.Director = director;
+            }
+        }
     }
 }
