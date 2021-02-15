@@ -1,4 +1,5 @@
-﻿using FilmsCatalog.Extensions;
+﻿using System.Linq;
+using FilmsCatalog.Extensions;
 using FilmsCatalog.Helpers;
 using FilmsCatalog.Models;
 using FilmsCatalog.Models.Db;
@@ -106,6 +107,7 @@ namespace FilmsCatalog.Controllers
             film.Year = model.Year;
             if (model.Poster is not null)
             {
+                _fileHelper.DeleteFile(film.Poster);
                 film.Poster = _fileHelper.SaveUploadedFile(model.Poster);
             }
 
@@ -136,6 +138,8 @@ namespace FilmsCatalog.Controllers
         [HttpGet("[action]/{id:int}")]
         public IActionResult Delete(int id)
         {
+            var fileName = _filmService.Query().Where(x => x.Id.Equals(id)).Select(x => x.Poster).FirstOrDefault();
+            _fileHelper.DeleteFile(fileName);
             _filmService.Delete(id);
 
             return RedirectToAction("Index");

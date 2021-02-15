@@ -5,7 +5,6 @@ namespace FilmsCatalog.Models
 {
     public class FilmDetailsViewModel : FilmEditViewModel
     {
-
         public User User { get; set; }
     }
 }
