@@ -20,9 +20,11 @@ namespace FilmsCatalog.Helpers
 
         public void DeleteFile(string filename)
         {
-            if (!string.IsNullOrEmpty(filename))
+            if (string.IsNullOrEmpty(filename)) return;
+            var filePath = GetPathToFile(filename);
+            if (File.Exists(filePath))
             {
-                DeleteFile(GetPathToFile(filename));
+                File.Delete(filePath);
             }
         }
 
