@@ -34,7 +34,7 @@ namespace FilmsCatalog.Helpers
         public string SaveUploadedFile(IFormFile file)
         {
             if (file?.FileName is null) return string.Empty;
-            var newName = new Random().Next(1111, 9999).ToString() + file.FileName;
+            var newName = new Random().Next(1111, 9999) + file.FileName;
             using var fileStream = new FileStream(GetPathToFile(newName),FileMode.Create);
             file.CopyTo(fileStream);
             return newName;

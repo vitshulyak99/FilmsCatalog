@@ -32,12 +32,10 @@ namespace FilmsCatalog.Controllers
         {
             if (page < 1)
             {
-                return BadRequest("Invalid page or size argument");
+                return BadRequest("Неверный номер страницы");
             }
 
             var count = _filmService.Count;
-
-
             var pagingList = PagingList.Create(_filmService.Query(), DefaultPageSize, page);
 
             return View(pagingList);
@@ -78,7 +76,7 @@ namespace FilmsCatalog.Controllers
         public IActionResult Edit(int id)
         {
             var userId = User.UserId();
-            if (!_filmService.CheckOwner(id, userId)) return BadRequest();
+            if (!_filmService.CheckOwner(id, userId)) return Forbid("Отказано в доступе");
 
             var film = _filmService.GetById(id);
             var viewModel = new FilmEditViewModel
@@ -99,7 +97,8 @@ namespace FilmsCatalog.Controllers
         public IActionResult Edit(FilmEditViewModel model)
         {
             var userId = User.UserId();
-            if (!_filmService.CheckOwner(model.Id, userId)) return BadRequest();
+            if (!_filmService.CheckOwner(model.Id, userId)) return Forbid("Отказано в доступе");
+
             var film = _filmService.GetById(model.Id);
             film.Description = model.Description;
             film.Director = film.Director.Name.Equals(model.Director)
@@ -120,7 +119,7 @@ namespace FilmsCatalog.Controllers
         public IActionResult Details(int id)
         {
             var film = _filmService.GetById(id);
-            if (film is null) return NotFound($"Not found film by id: {id}");
+            if (film is null) return NotFound($"Фильм не найден");
 
             var details = new FilmDetailsViewModel
             {
