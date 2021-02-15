@@ -22,6 +22,10 @@ namespace FilmsCatalog.Data
             {
                 e.HasOne(x => x.Director).WithMany(x => x.Films);
             });
+            builder.Entity<Director>(e =>
+            {
+                e.HasIndex(x => x.Name);
+            });
         }
     }
 }

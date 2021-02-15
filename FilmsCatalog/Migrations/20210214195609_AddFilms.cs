@@ -46,8 +46,9 @@ namespace FilmsCatalog.Migrations
                 name: "Directors",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -58,12 +59,13 @@ namespace FilmsCatalog.Migrations
                 name: "Films",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Year = table.Column<int>(type: "int", nullable: false),
                     Poster = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DirectorId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    DirectorId = table.Column<int>(type: "int", nullable: true),
                     AddedAtId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
@@ -82,6 +84,11 @@ namespace FilmsCatalog.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Directors_Name",
+                table: "Directors",
+                column: "Name");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Films_AddedAtId",
